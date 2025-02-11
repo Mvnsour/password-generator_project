@@ -1,9 +1,9 @@
 import { prompt } from './prompt.js';
 
 function askCharsLength() {
-  let charLength = Number(prompt('How many characters do you want ? (8-36)\n'));
+  let charLength = Number(prompt('How many character do you want ? (12-36)\n'));
   
-  if (Number.isNaN(charLength) || charLength > 36 || charLength < 8) {
+  if (Number.isNaN(charLength) || charLength > 36 || charLength < 12) {
   throw new Error("Please you must write a number between 8 and 36. Try again.\n");
   }
 
@@ -28,4 +28,14 @@ function askNumbers() {
   }
 
   return numbers;
+}
+
+function askUpperCase() {
+  let upperCase = prompt('Do you want upper cases ? (y/n)\n');
+  
+  if (upperCase !== 'y' && upperCase !== 'n') {
+    throw new Error(`Please you must write "y" for "yes" or "n" for "no". Try again.\n`);
+  }
+
+  return upperCase;
 }
