@@ -1,13 +1,13 @@
 import { prompt } from './prompt.js';
 
 function askCharsLength() {
-  let charLength = Number(prompt('How many character do you want ? (12-36)\n'));
+  let charsLength = Number(prompt('How many character do you want ? (12-36)\n'));
   
-  if (Number.isNaN(charLength) || charLength > 36 || charLength < 12) {
+  if (Number.isNaN(charsLength) || charsLength > 36 || charsLength < 12) {
   throw new Error("Please you must write a number between 8 and 36. Try again.\n");
   }
 
-  return charLength;
+  return charsLength;
 }
 
 function askSpecialChars() {
@@ -39,3 +39,26 @@ function askUpperCase() {
 
   return upperCase;
 }
+
+const main = () => {
+  let charsLength = null;
+  let specChars = null;
+  let numbers = null;
+  let upperCase = null;
+
+  while (
+    charsLength === null || specChars === null ||
+    numbers === null || upperCase === null
+  ) {
+    try {
+      charsLength = charsLength ? charsLength : askCharsLength();
+      specChars = specChars ? specChars : askSpecialChars();
+      numbers = numbers ? numbers : askNumbers();
+      upperCase = upperCase ? upperCase : askUpperCase();
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+}
+
+main();
