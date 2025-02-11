@@ -1,4 +1,4 @@
-### Instructions 🇫🇷
+# Instructions 🇫🇷
 
 On va créer un générateur de mot de passe en utilisant le terminal, voici à quoi ça va ressembler :
 
@@ -10,6 +10,7 @@ y
 y
 ⬆️ Majuscules ? (y/n)
 y
+
 Votre mot de passe généré est : GZC@cbwOTb
 
 
@@ -22,7 +23,7 @@ Cet exercice va faire intervenir :
 * l'utilisation de Math.random() et Math.floor
 
 
-### Instructions 🇬🇧
+# Instructions 🇬🇧
 
 We're going to create a password generator using the terminal, here's what it's going to look like:
 
@@ -34,6 +35,7 @@ y
 y
 ⬆️ Capitals? (y/n)
 y
+
 Your generated password is: GZC@cbwOTb
 
 
