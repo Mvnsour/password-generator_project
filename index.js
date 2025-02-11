@@ -1,5 +1,7 @@
 import { prompt } from './prompt.js';
 
+// 1st step : recovering settings from the user
+
 function askCharsLength() {
   let charsLength = Number(prompt('How many character do you want ? (12-36)\n'));
   
@@ -40,6 +42,31 @@ function askUpperCase() {
   return upperCase;
 }
 
+// 2nd step : generating the password
+
+const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
+const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const SPECIALS = '!@#$%^&*()';
+const NUMBERS = '0123456789';
+
+const generatePassword = (charsLength, specChars, numbers, upperCase) => {
+  let charset = LOWERCASE;
+  
+  if (upperCase) {
+    charset += UPPERCASE;
+  }
+  
+  if (specChars) {
+    charset += SPECIALS;
+  }
+  
+  if (numbers) {
+    charset += NUMBERS;
+  }
+};
+
+// for each setting, we ask the user until he gives a correct answer
+
 const main = () => {
   let charsLength = null;
   let specChars = null;
@@ -59,6 +86,11 @@ const main = () => {
       console.error(error.message);
     }
   }
+
+  const password = generatePassword(charsLength, specChars, numbers, upperCase);
+  console.log(`Your generated password is: password ${password}`);
 }
+
+// 3rd step : displaying the password
 
 main();
