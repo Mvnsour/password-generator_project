@@ -19,3 +19,13 @@ function askSpecialChars() {
 
   return specialChars;
 }
+
+function askNumbers() {
+  let numbers = prompt('Do you want numbers ? (y/n)\n');
+  
+  if (numbers !== 'y' && numbers !== 'n') {
+    throw new Error(`Please you must write "y" for "yes" or "n" for "no". Try again.\n`);
+  }
+
+  return numbers;
+}
