@@ -6,7 +6,7 @@ function askCharsLength() {
   let charsLength = Number(prompt('How many character do you want ? (12-36)\n'));
   
   if (Number.isNaN(charsLength) || charsLength > 36 || charsLength < 12) {
-  throw new Error("Please you must write a number between 8 and 36. Try again.\n");
+  throw new Error("Please you must write a number between 12 and 36. Try again.\n");
   }
 
   return charsLength;
@@ -19,7 +19,7 @@ function askSpecialChars() {
     throw new Error(`Please you must write "y" for "yes" or "n" for "no". Try again.\n`);
   }
 
-  return specialChars;
+  return specialChars === 'y';
 }
 
 function askNumbers() {
@@ -29,7 +29,7 @@ function askNumbers() {
     throw new Error(`Please you must write "y" for "yes" or "n" for "no". Try again.\n`);
   }
 
-  return numbers;
+  return numbers === 'y';
 }
 
 function askUpperCase() {
@@ -39,17 +39,17 @@ function askUpperCase() {
     throw new Error(`Please you must write "y" for "yes" or "n" for "no". Try again.\n`);
   }
 
-  return upperCase;
+  return upperCase === 'y';
 }
 
 // 2nd step : generating the password
 
 const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
-const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const SPECIALS = '!@#$%^&*()';
+const UPPERCASE = LOWERCASE.toUpperCase();
+const SPECIALS = '!@#$%^&*-:/()_+';
 const NUMBERS = '0123456789';
 
-const generatePassword = (charsLength, specChars, numbers, upperCase) => {
+function generatePassword(charsLength, specChars, numbers, upperCase) {
   let charset = LOWERCASE;
   
   if (upperCase) {
@@ -63,19 +63,38 @@ const generatePassword = (charsLength, specChars, numbers, upperCase) => {
   if (numbers) {
     charset += NUMBERS;
   }
+
+  let password = '';
+// we generate a random index to pick a character from the charset
+  for (let i = 0; i < charsLength; i++) {
+    let randomIndex = Math.floor(Math.random() * charset.length);
+    password  += charset[randomIndex]
+  }
+  
+  // Check if generated password matches user criteria
+  if ((upperCase && !/[A-Z]/.test(password)) || 
+  (!numbers && /[0-9]/.test(password)) || 
+  (!specChars && /[!@#$%^&*]/.test(password))) {
+  // Regenerate if uppercase, numbers, or special chars required but missing
+  return generatePassword(charsLength, specChars, numbers, upperCase);
+} 
+
+  return password;
 };
 
 // for each setting, we ask the user until he gives a correct answer
 
-const main = () => {
+function main() {
   let charsLength = null;
   let specChars = null;
   let numbers = null;
   let upperCase = null;
 
   while (
-    charsLength === null || specChars === null ||
-    numbers === null || upperCase === null
+    charsLength === null ||
+    specChars === null ||
+    numbers === null ||
+    upperCase === null
   ) {
     try {
       charsLength = charsLength ? charsLength : askCharsLength();
@@ -86,11 +105,11 @@ const main = () => {
       console.error(error.message);
     }
   }
-
+  
+  // 3rd step : displaying the password
   const password = generatePassword(charsLength, specChars, numbers, upperCase);
-  console.log(`Your generated password is: password ${password}`);
+  console.log(`Your generated password is: ${password}`);
 }
 
-// 3rd step : displaying the password
 
 main();
