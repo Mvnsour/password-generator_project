@@ -74,7 +74,7 @@ function generatePassword(charsLength, specChars, numbers, upperCase) {
   // Check if generated password matches user criteria
   if ((upperCase && !/[A-Z]/.test(password)) || 
   (!numbers && /[0-9]/.test(password)) || 
-  (!specChars && /[!@#$%^&*]/.test(password))) {
+  (!specChars && /[!@#$%^&*-:/()_+]/.test(password))) {
   // Regenerate if uppercase, numbers, or special chars required but missing
   return generatePassword(charsLength, specChars, numbers, upperCase);
 } 
